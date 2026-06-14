@@ -1,0 +1,66 @@
+{
+  "name": "Идеи для постов",
+  "type": "private_supergroup",
+  "id": 3373671933,
+  "messages": [
+    {
+      "id": 1,
+      "type": "service",
+      "date": "2025-12-01T18:00:00",
+      "date_unixtime": "1764600000",
+      "actor": "Идеи для постов",
+      "actor_id": "channel3373671933",
+      "action": "create_channel",
+      "title": "Идеи для постов",
+      "text": "",
+      "text_entities": []
+    },
+    {
+      "id": 4,
+      "type": "message",
+      "date": "2025-12-01T18:15:41",
+      "date_unixtime": "1764602141",
+      "from": "Идеи для постов",
+      "from_id": "channel3373671933",
+      "forwarded_from": "Kali Linux",
+      "text": [
+        "Полный список: ",
+        { "type": "link", "text": "https://example.com/list" },
+        ""
+      ],
+      "text_entities": [
+        { "type": "plain", "text": "Полный список: " },
+        { "type": "link", "text": "https://example.com/list" },
+        { "type": "plain", "text": "" }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "message",
+      "date": "2025-12-01T18:30:00",
+      "date_unixtime": "1764603000",
+      "from": "Идеи для постов",
+      "from_id": "channel3373671933",
+      "text_entities": [
+        { "type": "bold", "text": "Linux-совет" },
+        { "type": "plain", "text": "\nиспользуй " },
+        { "type": "code", "text": "lsof" },
+        { "type": "plain", "text": ":\n" },
+        { "type": "pre", "text": "\nfor pid in /proc/[0-9]*; do\n    echo \"$pid\"\ndone\n", "language": "bash" },
+        { "type": "plain", "text": "\nрепа: " },
+        { "type": "text_link", "text": "Репыч на Гитхаб", "href": "https://github.com/zxh326/kite" }
+      ]
+    },
+    {
+      "id": 7,
+      "type": "message",
+      "date": "2025-12-01T19:00:00",
+      "date_unixtime": "1764604800",
+      "from": "Идеи для постов",
+      "from_id": "channel3373671933",
+      "photo": "photos/photo_2@01-12-2025_19-00-00.jpg",
+      "text": "",
+      "text_entities": []
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: short
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  fmt:
+    name: rustfmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - run: cargo fmt --all -- --check
+
+  clippy:
+    name: clippy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo clippy --all-targets -- -D warnings
+
+  test:
+    name: test (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-14]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: cargo test
+        run: cargo test --all-targets
+
+  smoke:
+    name: smoke (${{ matrix.os }})
+    needs: test
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-14]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: build release binary
+        run: cargo build --release --bin tgselector
+      - name: extract a post from the fixture
+        run: ./target/release/tgselector --file tests/fixtures/sample.json --id 5 > /dev/null
+      - name: list and json on the fixture
+        run: |
+          ./target/release/tgselector --file tests/fixtures/sample.json --list > /dev/null
+          ./target/release/tgselector --file tests/fixtures/sample.json --id 4,5 --json > /dev/null
+      - name: shell completions sanity
+        run: |
+          ./target/release/tgselector --completions bash > /dev/null
+          ./target/release/tgselector --completions zsh > /dev/null
+          ./target/release/tgselector --completions fish > /dev/null
+      - name: --version sanity check
+        run: ./target/release/tgselector --version

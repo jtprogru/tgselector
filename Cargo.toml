@@ -1,0 +1,22 @@
+[package]
+name = "tgselector"
+version = "0.1.0"
+edition = "2021"
+description = "Find a Telegram-export post by id and print its processed text"
+license = "MIT"
+repository = "https://github.com/jtprogru/tgselector"
+
+[[bin]]
+name = "tgselector"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+clap_complete = "4"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[profile.release]
+strip = true
+lto = true
